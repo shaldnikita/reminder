@@ -18,7 +18,7 @@ class EmailNotificator(implicit conf: EmailConfiguration) extends Notificator {
 
   override def notify(user: User)(implicit ec: ExecutionContext) = async {
     send(MailMessage(
-      from = (conf.from, conf.from),
+      from = (conf.fromEmail, conf.fromName),
       to = Seq(user.email),
       subject = "Notification",
       message = "Уважаемый hujjj"
@@ -33,7 +33,7 @@ class EmailNotificator(implicit conf: EmailConfiguration) extends Notificator {
     message.to foreach commonsMail.addTo
     message.cc foreach commonsMail.addCc
     message.bcc foreach commonsMail.addBcc
-    commonsMail.setAuthentication(conf.userName, conf.password)
+    commonsMail.setAuthentication(conf.login, conf.password)
     commonsMail.setHostName("smtp.yandex.com")
     commonsMail.setSmtpPort(465)
     commonsMail.setSSLOnConnect(true)

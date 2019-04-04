@@ -10,6 +10,6 @@ import ru.shaldnikita.timer.dao.entities.User
   */
 class UserService {
   def find(userId: String)= {
-    User(UUID.randomUUID().toString, "shaldnikita2@yandex.ru")
+    User(UUID.randomUUID().toString, "shaldnikita2@yandex.ru", "+79175586982")
   }
 }

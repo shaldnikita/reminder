@@ -22,4 +22,4 @@ class User(tag: Tag) extends Table[(String, String, String, String, String)](tag
   override def * = (userId, email, firstName, secondName, phoneNumber)
 }*/
 
-case class User(userId: String, email: String)
+case class User(userId: String, email: String, phoneNumber: String)
