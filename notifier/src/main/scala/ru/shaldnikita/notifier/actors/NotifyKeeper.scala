@@ -6,6 +6,7 @@ import ru.shaldnikita.notifier.messages.NotifyMessage
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
+import akka.pattern.ask
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
@@ -16,6 +17,7 @@ class NotifyKeeper(notifier: ActorRef)(implicit ec: ExecutionContext) extends Ac
 
   override def receive = {
     case message: Notification => handlerMessage(message)
+    case other: AnyRef => log.warning("Wrong message {}", other)
   }
 
   private def handlerMessage(message: Notification) = {

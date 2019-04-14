@@ -52,8 +52,6 @@
             <artifactId>akka-slf4j_2.12</artifactId>
             <version>2.5.19</version>
         </dependency>
-
-
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-http_2.12</artifactId>
@@ -61,9 +59,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.typelevel</groupId>
-            <artifactId>cats-core_2.12</artifactId>
-            <version>1.6.0</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
         </dependency>
 
 

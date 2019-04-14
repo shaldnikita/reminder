@@ -16,15 +16,21 @@ import scala.concurrent.ExecutionContext
 
 object Environment {
 
+  import org.apache.log4j.BasicConfigurator
+
+  BasicConfigurator.configure()
   implicit val system: ActorSystem = ActorSystem("reminder")
   implicit val ec: ExecutionContext = system.dispatcher
   implicit val actorMaterializer: ActorMaterializer = ActorMaterializer()
   val conf = ConfigFactory.defaultApplication()
+  conf.resolve()
 
-  implicit val emailNotificationsConfiguration: EmailConfiguration = new SystemEnvironmentEmailConfiguration(conf)
+  implicit val emailNotificationsConfiguration: EmailConfiguration =
+    new SystemEnvironmentEmailConfiguration(conf.getConfig("email"))
   val emailNotificator = new EmailNotificator()
 
-  implicit val phoneNotificationsConfiguration: PhoneConfiguration = new SystemEnvironmentPhoneConfiguration(conf)
+  implicit val phoneNotificationsConfiguration: PhoneConfiguration =
+    new SystemEnvironmentPhoneConfiguration(conf.getConfig("sms"))
   val phoneNotificator = new PhoneNotificator()
 
   val userRepository = new UserRepository(dao.dao.inMemoryDatabase)

@@ -11,5 +11,5 @@ sealed trait PhoneConfiguration {
 }
 
 class SystemEnvironmentPhoneConfiguration(config: Config) extends PhoneConfiguration {
-  override def apiId: String = config.getString("sms_api_id")
+  override def apiId: String = config.getString("api_id")
 }

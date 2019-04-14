@@ -17,5 +17,6 @@ package object dao {
   Tables.users += User("shaldnikita2@yandex.ru",
     "Никита",
     "Шалденков",
-    "+79175586982")
+    "+79175586982",
+    userId = "Ya")
 }
