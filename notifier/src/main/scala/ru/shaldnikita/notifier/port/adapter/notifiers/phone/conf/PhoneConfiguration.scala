@@ -1,4 +1,4 @@
-package ru.shaldnikita.notifier.notificators.phone.conf
+package ru.shaldnikita.notifier.port.adapter.notifiers.phone.conf
 
 import com.typesafe.config.Config
 
@@ -11,5 +11,5 @@ sealed trait PhoneConfiguration {
 }
 
 class SystemEnvironmentPhoneConfiguration(config: Config) extends PhoneConfiguration {
-  override def apiId: String = config.getString("api_id")
+  override def apiId: String = config.getString("apiId")
 }

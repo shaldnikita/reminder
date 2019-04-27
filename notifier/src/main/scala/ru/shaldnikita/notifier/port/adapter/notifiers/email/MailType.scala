@@ -1,4 +1,4 @@
-package ru.shaldnikita.notifier.notificators.email
+package ru.shaldnikita.notifier.port.adapter.notifiers.email
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

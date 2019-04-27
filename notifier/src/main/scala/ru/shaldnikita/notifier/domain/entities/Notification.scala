@@ -1,4 +1,4 @@
-package ru.shaldnikita.notifier.entities
+package ru.shaldnikita.notifier.domain.entities
 
 import java.util.UUID
 
@@ -14,6 +14,4 @@ case class Notification(id: String = UUID.randomUUID().toString,
                         isWholeDay: Boolean,
                         isRepeatable: Boolean,
                         repeatIn: Option[FiniteDuration],
-                        owner: Owner)
-
-case class Owner(id: String)
+                        userId: String)

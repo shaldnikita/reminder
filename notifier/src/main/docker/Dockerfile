@@ -1,4 +1,4 @@
-FROM openjdk:10
+FROM openjdk:11
 MAINTAINER Nikita Shaldenkov <shaldnikita2@yandex.ru>
 
 ADD ./target/notifier.jar /app/

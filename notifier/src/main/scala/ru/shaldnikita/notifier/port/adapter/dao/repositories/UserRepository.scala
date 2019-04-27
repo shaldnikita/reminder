@@ -1,6 +1,7 @@
-package ru.shaldnikita.notifier.dao.repositories
+package ru.shaldnikita.notifier.port.adapter.dao.repositories
 
-import ru.shaldnikita.notifier.dao.entities.{User, UserTable}
+import ru.shaldnikita.notifier.port.adapter.dao.entities.UserTable
+import ru.shaldnikita.notifier.port.adapter.dao.entities.{User, UserTable}
 import slick.jdbc.H2Profile.api._
 import slick.lifted.TableQuery
 

@@ -1,6 +1,6 @@
 package ru.shaldnikita.notifier.service
 
-import ru.shaldnikita.notifier.dao.repositories.UserRepository
+import ru.shaldnikita.notifier.port.adapter.dao.repositories.UserRepository
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

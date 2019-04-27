@@ -1,4 +1,4 @@
-package ru.shaldnikita.notifier.notificators.email.conf
+package ru.shaldnikita.notifier.port.adapter.notifiers.email.conf
 
 import com.typesafe.config.Config
 
@@ -20,6 +20,8 @@ trait EmailConfiguration {
   def port: Int
 
   def ssl: Boolean
+
+  def subject: String
 }
 
 class SystemEnvironmentEmailConfiguration(config: Config) extends EmailConfiguration {
@@ -27,13 +29,15 @@ class SystemEnvironmentEmailConfiguration(config: Config) extends EmailConfigura
 
   override def fromName = config.getString("fromName")
 
+  override def subject = config.getString("subject")
+
   override def login = config.getString("login")
 
   override def password = config.getString("password")
 
-  override def hostName = sys.env.getOrElse("EMAIL_HOST", "smtp.yandex.com")
+  override def hostName = config.getString("settings.hostName")
 
-  override def port = sys.env.get("EMAIL_PORT").map(_.toInt).getOrElse(465)
+  override def port = config.getInt("settings.smtpPort")
 
-  override def ssl = sys.env.get("EMAIL_SSL").forall(_.toBoolean)
+  override def ssl = config.getBoolean("settings.sslConnect")
 }

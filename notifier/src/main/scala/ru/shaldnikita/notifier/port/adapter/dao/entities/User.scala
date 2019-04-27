@@ -1,18 +1,12 @@
-package ru.shaldnikita.notifier.dao.entities
+package ru.shaldnikita.notifier.port.adapter.dao.entities
 
-import java.util.UUID
-
+import ru.shaldnikita.notifier.domain.entities.User
 import slick.jdbc.H2Profile.api._
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 03.04.2019
   */
-case class User(email: String,
-                firstName: String,
-                secondName: String,
-                phoneNumber: String,
-                userId: String = UUID.randomUUID().toString)
 
 class UserTable(tag: Tag) extends Table[User](tag, "users") {
 
@@ -29,7 +23,7 @@ class UserTable(tag: Tag) extends Table[User](tag, "users") {
   def phoneNumber = column[String]("phone_number")
 
   override def * =
-    (userId, email, firstName, secondName, phoneNumber) <> (User.tupled, User.unapply)
+    (email, firstName, secondName, phoneNumber, userId) <> (User.tupled, User.unapply)
 
   def user_id_idx = index("users_used_id_udx", userId, unique = true)
 
