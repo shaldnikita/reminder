@@ -1,5 +1,7 @@
 package ru.shaldnikita.notifier.port.adapter.web
 
+import java.util.UUID
+
 import akka.actor.ActorRef
 import akka.http.scaladsl.marshalling.Marshaller._
 import akka.http.scaladsl.model.StatusCodes
@@ -10,7 +12,6 @@ import akka.pattern.ask
 import akka.util.Timeout
 import ru.shaldnikita.notifier.domain.entities.Notification
 import ru.shaldnikita.notifier.domain.messages._
-import ru.shaldnikita.notifier.port.adapter.web.models.NewNotification
 
 import scala.concurrent.ExecutionContext
 
@@ -25,19 +26,18 @@ class NotificationsEndpoint(notificationsManager: ActorRef, // provides access t
   def route: Route = path("users" / JavaUUID) { userId =>
     path("notify" / JavaUUID) { notificationId =>
       get {
-        complete(
-          (notifyManager ? NotifyNowMessage(userId.toString, notificationId.toString))
-            .mapTo[models.Notification]
-        )
+        complete {
+          notifyManager ! NotifyNowMsg(userId.toString, notificationId.toString)
+          StatusCodes.OK
+        }
       }
     }
 
-
     path("notifications") {
       //create new notification
-      (post & entity(as[NewNotification])) { notification =>
+      (post & entity(as[models.Notification])) { notification =>
         complete {
-          notificationsManager ? CreateNotification
+          notificationsManager ? fromModel(notification)
           StatusCodes.OK
         }
       }
@@ -51,10 +51,10 @@ class NotificationsEndpoint(notificationsManager: ActorRef, // provides access t
               .map(toModel)
           )
         }
-        (put & entity(as[NewNotification])) { notification =>
+        (put & entity(as[models.Notification])) { notification =>
           complete {
             //todo add body
-            notificationsManager ! UpdateNotification()
+            notificationsManager ! fromModel(notification)
             StatusCodes.OK
           }
         }
@@ -76,6 +76,17 @@ class NotificationsEndpoint(notificationsManager: ActorRef, // provides access t
   }
 
   private def toModel(n: Notification) = {
-    models.Notification(n.id, n.text, n.notifyIn, n.isWholeDay, n.isRepeatable, n.repeatIn)
+    models.Notification(n.text, n.notifyIn, n.isWholeDay, n.isRepeatable, n.repeatIn, Some(n.notificationId))
+  }
+
+  private def fromModel(n: models.Notification) = {
+    NotificationMsg(
+      text = n.text,
+      notifyIn = n.notifyIn,
+      isWholeDay = n.isWholeDay,
+      isRepeatable = n.isRepeatable,
+      repeatIn = n.repeatIn,
+      id = n.id.map(UUID.fromString)
+    )
   }
 }

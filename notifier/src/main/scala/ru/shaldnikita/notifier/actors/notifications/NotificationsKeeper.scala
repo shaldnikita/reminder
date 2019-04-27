@@ -1,8 +1,8 @@
-package ru.shaldnikita.notifier.actors
+package ru.shaldnikita.notifier.actors.notifications
 
 import akka.actor.{Actor, ActorLogging, ActorRef}
 import ru.shaldnikita.notifier.domain.entities.Notification
-import ru.shaldnikita.notifier.domain.messages.NotifyMessage
+import ru.shaldnikita.notifier.domain.messages.{GetNotifications, NotificationMsg}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
@@ -15,7 +15,7 @@ class NotificationsKeeper(notifier: ActorRef)(implicit ec: ExecutionContext) ext
   private val notifyMessages: mutable.Map[String, Notification] = mutable.HashMap.empty
 
   override def receive = {
-    case message: Notification => handlerMessage(message)
+    case msg: GetNotifications  => handlerMessage(message)
     case other: AnyRef => log.warning("Wrong message {}", other)
   }
 
@@ -29,7 +29,7 @@ class NotificationsKeeper(notifier: ActorRef)(implicit ec: ExecutionContext) ext
         notifier ! NotifyMessage(message)
       }
     }
-    notifyMessages.put(message.id, message)
+    notifyMessages.put(message.notificationId, message)
   }
 }
 

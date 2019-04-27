@@ -8,7 +8,7 @@ import scala.concurrent.duration.FiniteDuration
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 03.04.2019
   */
-case class Notification(id: String = UUID.randomUUID().toString,
+case class Notification(notificationId: String = UUID.randomUUID().toString,
                         text: String,
                         notifyIn: FiniteDuration,
                         isWholeDay: Boolean,

@@ -8,7 +8,7 @@ import slick.jdbc.H2Profile.api._
   *         on 03.04.2019
   */
 
-class UserTable(tag: Tag) extends Table[User](tag, "users") {
+class UserTable(tag: Tag) extends Table[User](tag, "users") with BaseTable{
 
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
@@ -25,10 +25,10 @@ class UserTable(tag: Tag) extends Table[User](tag, "users") {
   override def * =
     (email, firstName, secondName, phoneNumber, userId) <> (User.tupled, User.unapply)
 
-  def user_id_idx = index("users_used_id_udx", userId, unique = true)
+  def user_id_udx = index("users_id_udx", userId, unique = true)
 
-  def phone_number_idx =
-    index("users_phone_number_idx", phoneNumber, unique = true)
+  def phone_number_udx =
+    index("users_phone_number_udx", phoneNumber, unique = true)
 
-  def email_idx = index("users_email_idx", email, unique = true)
+  def email_udx = index("users_email_udx", email, unique = true)
 }

@@ -4,7 +4,7 @@ import akka.actor.{ActorSystem, Props, SupervisorStrategy}
 import akka.routing.FromConfig
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
-import ru.shaldnikita.notifier.actors.NotificationsKeeper
+import ru.shaldnikita.notifier.actors.notifications.NotificationsKeeper
 import ru.shaldnikita.notifier.actors.notifiers.NotifyManager
 import ru.shaldnikita.notifier.port.adapter.dao.repositories.UserRepository
 import ru.shaldnikita.notifier.port.adapter.notifiers.email.conf.{EmailConfiguration, SystemEnvironmentEmailConfiguration}
@@ -45,6 +45,9 @@ object Environment {
     Props(new NotifyManager(List(phoneNotificator, emailNotificator), userService))), NotifyManager.name)
 
   val endpoint = new NotificationsEndpoint()
+
+
+
 
   val notifyKeeper = system.actorOf(FromConfig.props(Props(new NotificationsKeeper(notifier))), NotificationsKeeper.name)
 }

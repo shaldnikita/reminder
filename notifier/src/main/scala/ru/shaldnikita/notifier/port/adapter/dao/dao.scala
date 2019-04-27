@@ -1,6 +1,7 @@
 package ru.shaldnikita.notifier
 
 import ru.shaldnikita.notifier.domain.entities.User
+import ru.shaldnikita.notifier.port.adapter.dao.Tables
 import slick.jdbc.H2Profile.api._
 
 /**
@@ -13,6 +14,7 @@ package object dao {
   //todo replace with Tables.tables.map(_.schema).map(_.create)
   val setup = DBIO.seq(
     Tables.users.schema.create,
+    Tables.notifications.schema.create,
 
     //todo remove
     Tables.users += User("shaldnikita2@yandex.ru",
