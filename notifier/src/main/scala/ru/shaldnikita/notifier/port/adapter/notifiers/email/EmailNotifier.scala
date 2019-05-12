@@ -1,9 +1,9 @@
 package ru.shaldnikita.notifier.port.adapter.notifiers.email
 
-import org.apache.commons.mail._
-import ru.shaldnikita.notifier.domain.messages.{NotificationContent, User}
+import ru.shaldnikita.notifier.domain.models.NotificationPayload
+import ru.shaldnikita.notifier.domain.models.users.UserContactType
+import ru.shaldnikita.notifier.domain.notifiers.{NotificationType, Notifier}
 import ru.shaldnikita.notifier.port.adapter.notifiers.email.conf.EmailConfiguration
-import ru.shaldnikita.notifier.port.adapter.notifiers.{EmailNotifier, NotifierActor}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -13,27 +13,41 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 class EmailNotifier(emailBuilder: EmailBuilder)
                    (implicit conf: EmailConfiguration,
-                       ec: ExecutionContext) extends NotifierActor {
+                    ec: ExecutionContext) extends Notifier {
 
-  override def notify(user: User, notification: NotificationContent)(implicit ec: ExecutionContext): Future[Unit] = Future {
-    val message = MailMessage(
-      from = (conf.fromEmail, conf.fromName),
-      to = Seq(user.email),
-      subject = conf.subject,
-      message = notification.text
-    )
-    val email = emailBuilder.buildEmail(message)
-    val enrichedEmailMessage = enrichEmail(email)
-    enrichedEmailMessage.send()
+
+  override def doNotify(contacts: Seq[UserContactType], notificationPayload: NotificationPayload)
+                       (implicit ec: ExecutionContext): Future[Unit] = {
+
   }
 
-  private def enrichEmail(email: Email) = {
-    email.setSSLOnConnect(conf.ssl)
-    email.setAuthentication(conf.login, conf.password)
-    email.setSmtpPort(conf.port)
-    email.setHostName(conf.hostName)
-    email
-  }
+  def requiredContactTypes: Seq[UserContactType] = Seq(UserContactType.Email, UserContactType.VkPage)
 
-  override def notificationType = EmailNotifier
+
+  override def notificationType = NotificationType.
+}
+
+
+override def notify (user: User, notification: NotificationContent) (implicit ec: ExecutionContext): Future[Unit] = Future {
+  val message = MailMessage (
+  from = (conf.fromEmail, conf.fromName),
+  to = Seq (user.email),
+  subject = conf.subject,
+  message = notification.text
+  )
+  val email = emailBuilder.buildEmail (message)
+  val enrichedEmailMessage = enrichEmail (email)
+  enrichedEmailMessage.send ()
+}
+
+
+  private def enrichEmail (email: Email) = {
+  email.setSSLOnConnect (conf.ssl)
+  email.setAuthentication (conf.login, conf.password)
+  email.setSmtpPort (conf.port)
+  email.setHostName (conf.hostName)
+  email
+}
+
+  override def notificationType = EmailNotification
 }

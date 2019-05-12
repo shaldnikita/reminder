@@ -5,7 +5,7 @@ import akka.routing.FromConfig
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import ru.shaldnikita.notifier.actors.notifications.NotificationsKeeper
-import ru.shaldnikita.notifier.actors.notifiers.NotifyManager
+import ru.shaldnikita.notifier.application.NotifyManager
 import ru.shaldnikita.notifier.port.adapter.dao.repositories.UserRepository
 import ru.shaldnikita.notifier.port.adapter.notifiers.email.conf.{EmailConfiguration, SystemEnvironmentEmailConfiguration}
 import ru.shaldnikita.notifier.port.adapter.notifiers.email.{EmailBuilder, EmailNotifier}

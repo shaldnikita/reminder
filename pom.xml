@@ -39,6 +39,11 @@
             <artifactId>cats-core_2.12</artifactId>
             <version>1.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.beachape</groupId>
+            <artifactId>enumeratum_2.12</artifactId>
+            <version>1.5.13</version>
+        </dependency>
 
 
         <!-- TESTING-->

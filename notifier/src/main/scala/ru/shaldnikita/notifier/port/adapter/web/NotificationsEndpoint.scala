@@ -2,16 +2,14 @@ package ru.shaldnikita.notifier.port.adapter.web
 
 import java.util.UUID
 
-import akka.actor.ActorRef
 import akka.http.scaladsl.marshalling.Marshaller._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{path, _}
 import akka.http.scaladsl.server.PathMatchers.JavaUUID
 import akka.http.scaladsl.server.Route
-import akka.pattern.ask
-import akka.util.Timeout
-import ru.shaldnikita.notifier.domain.entities.Notification
-import ru.shaldnikita.notifier.domain.messages._
+import ru.shaldnikita.notifier.application.NotifyManager
+import ru.shaldnikita.notifier.port.adapter.dao.repositories.NotificationRepository
+import ru.shaldnikita.notifier.port.adapter.web.models.Notification
 
 import scala.concurrent.ExecutionContext
 
@@ -19,15 +17,14 @@ import scala.concurrent.ExecutionContext
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 27.04.2019
   */
-class NotificationsEndpoint(notificationsManager: ActorRef, // provides access to notifications
-                            notifyManager: ActorRef // provides access to  notifiers
-                           )(implicit timeout: Timeout,
-                             ec: ExecutionContext) {
+class NotificationsEndpoint(notifyManager: NotifyManager,
+                            notificationRepository: NotificationRepository)(
+                             implicit ec: ExecutionContext) {
   def route: Route = path("users" / JavaUUID) { userId =>
     path("notify" / JavaUUID) { notificationId =>
       get {
         complete {
-          notifyManager ! NotifyNowMsg(userId.toString, notificationId.toString)
+          notifyManager.notifyUser(userId.toString, notificationId.toString)
           StatusCodes.OK
         }
       }
@@ -35,23 +32,22 @@ class NotificationsEndpoint(notificationsManager: ActorRef, // provides access t
 
     path("notifications") {
       //create new notification
-      (post & entity(as[models.Notification])) { notification =>
+      /*(post & entity(as[models.Notification])) { notification =>
         complete {
           notificationsManager ? fromModel(notification)
           StatusCodes.OK
         }
-      }
+      }*/
 
       path(JavaUUID) { notificationId =>
         //get single notification
         get {
           complete(
-            (notificationsManager ? GetNotification(userId.toString, notificationId.toString))
-              .mapTo[Notification]
-              .map(toModel)
+            notificationRepository.findByUserIdAndNotificationId(userId.toString, notificationId.toString)
+              .map(_.map(toModel))
           )
         }
-        (put & entity(as[models.Notification])) { notification =>
+        (put & entity(as[Notification])) { notification =>
           complete {
             //todo add body
             notificationsManager ! fromModel(notification)
@@ -76,11 +72,11 @@ class NotificationsEndpoint(notificationsManager: ActorRef, // provides access t
   }
 
   private def toModel(n: Notification) = {
-    models.Notification(n.text, n.notifyIn, n.isWholeDay, n.isRepeatable, n.repeatIn, Some(n.notificationId))
+    Notification(n.text, n.notifyIn, n.isWholeDay, n.isRepeatable, n.repeatIn, Some(n.notificationId))
   }
 
-  private def fromModel(n: models.Notification) = {
-    NotificationMsg(
+  private def fromModel(n: Notification) = {
+    NotificationData(
       text = n.text,
       notifyIn = n.notifyIn,
       isWholeDay = n.isWholeDay,

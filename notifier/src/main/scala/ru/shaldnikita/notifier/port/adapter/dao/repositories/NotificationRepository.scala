@@ -1,8 +1,8 @@
 package ru.shaldnikita.notifier.port.adapter.dao.repositories
 
-import ru.shaldnikita.notifier.domain.entities.Notification
-import ru.shaldnikita.notifier.port.adapter.dao.Tables
-import ru.shaldnikita.notifier.port.adapter.dao.entities.NotificationTable
+import ru.shaldnikita.notifier.domain.models.Notification
+import ru.shaldnikita.notifier.port.adapter.dao.Tables.notifications
+import ru.shaldnikita.notifier.port.adapter.dao.tables.NotificationTable
 import slick.jdbc.H2Profile.api._
 import slick.lifted.TableQuery
 
@@ -13,13 +13,16 @@ import scala.concurrent.Future
   *         on 28.04.2019
   */
 class NotificationRepository(db: Database) extends TableQuery(new NotificationTable(_)) {
-  private val notifications = Tables.notifications
 
   def findByUserId(userId: String): Future[Seq[Notification]] = {
     db.run(notifications.filter(_.userId === userId).result)
   }
 
-  def findById(notificationId: String): Future[Option[Notification]] = {
+  def findByNotificationId(notificationId: String): Future[Option[Notification]] = {
     db.run(notifications.filter(_.notificationId === notificationId).result.headOption)
+  }
+
+  def findByUserIdAndNotificationId(userId: String, notificationId: String): Future[Seq[Notification]] = {
+    db.run(notifications.filter(_.notificationId === notificationId).filter(_.userId === userId).result)
   }
 }

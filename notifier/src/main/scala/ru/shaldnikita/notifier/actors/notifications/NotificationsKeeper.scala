@@ -1,7 +1,7 @@
 package ru.shaldnikita.notifier.actors.notifications
 
 import akka.actor.{Actor, ActorLogging, ActorRef}
-import ru.shaldnikita.notifier.domain.entities.Notification
+import ru.shaldnikita.notifier.domain.models.Notification
 import ru.shaldnikita.notifier.domain.messages.{GetNotifications, NotificationMsg}
 
 import scala.collection.mutable

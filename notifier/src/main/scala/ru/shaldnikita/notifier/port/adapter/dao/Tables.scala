@@ -1,6 +1,7 @@
 package ru.shaldnikita.notifier.port.adapter.dao
 
-import ru.shaldnikita.notifier.port.adapter.dao.entities.{NotificationTable, UserTable}
+/*
+import ru.shaldnikita.notifier.port.adapter.dao.tables.{NotificationTable, UserTable}
 import slick.lifted.TableQuery
 
 object Tables {
@@ -9,3 +10,4 @@ object Tables {
 
   def tables = Seq(users, notifications)
 }
+*/

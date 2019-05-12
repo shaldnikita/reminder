@@ -3,7 +3,7 @@ package ru.shaldnikita.notifier
 import java.util.concurrent.TimeUnit
 
 import akka.http.scaladsl.Http
-import ru.shaldnikita.notifier.domain.entities.Notification
+import ru.shaldnikita.notifier.domain.models.Notification
 import Environment._
 import akka.event.Logging
 
