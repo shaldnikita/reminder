@@ -1,8 +1,8 @@
 package ru.shaldnikita.notifier.port.adapter.notifiers.email
 
-import ru.shaldnikita.notifier.domain.models.NotificationPayload
+import ru.shaldnikita.notifier.domain.models.notifications.NotificationPayload
 import ru.shaldnikita.notifier.domain.models.users.UserContactType
-import ru.shaldnikita.notifier.domain.notifiers.{NotificationType, Notifier}
+import ru.shaldnikita.notifier.domain.notifiers.Notifier
 import ru.shaldnikita.notifier.port.adapter.notifiers.email.conf.EmailConfiguration
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -29,6 +29,9 @@ class EmailNotifier(emailBuilder: EmailBuilder)
 
 
 override def notify (user: User, notification: NotificationContent) (implicit ec: ExecutionContext): Future[Unit] = Future {
+
+  import ru.shaldnikita.notifier.domain.models.notifications.NotificationPayload
+
   val message = MailMessage (
   from = (conf.fromEmail, conf.fromName),
   to = Seq (user.email),

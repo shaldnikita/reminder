@@ -1,6 +1,6 @@
 package ru.shaldnikita.notifier.domain.exceptions
 
-import ru.shaldnikita.notifier.domain.notifiers.NotificationType
+import ru.shaldnikita.notifier.domain.models.notifications.NotificationType
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

@@ -3,9 +3,9 @@ package ru.shaldnikita.notifier
 import java.util.concurrent.TimeUnit
 
 import akka.http.scaladsl.Http
-import ru.shaldnikita.notifier.domain.models.Notification
 import Environment._
 import akka.event.Logging
+import ru.shaldnikita.notifier.domain.models.notifications.Notification
 
 import scala.concurrent.duration.FiniteDuration
 

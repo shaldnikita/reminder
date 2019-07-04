@@ -1,4 +1,4 @@
-package ru.shaldnikita.notifier.domain.models
+package ru.shaldnikita.notifier.domain.models.notifications
 
 import java.util.UUID
 
@@ -10,17 +10,17 @@ import scala.concurrent.duration.FiniteDuration
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 03.04.2019
   */
+case class NotificationId(id: String = UUID.randomUUID().toString)
+
 case class Notification(notificationId: NotificationId,
+                        userId: UserId,
                         payload: NotificationPayload,
                         notifyIn: FiniteDuration,
-                        additionalInfo: additionalInfo,
-                        userId: UserId)
+                        additionalInfo: AdditionalInfo)
 
-case class additionalInfo(isWholeDay: Boolean,
+case class AdditionalInfo(isWholeDay: Boolean,
                           isRepeatable: Boolean,
                           repeatIn: Option[FiniteDuration])
 
-case class NotificationId(id: String = UUID.randomUUID().toString)
 
-case class NotificationPayload(text: Option[String],
-                               data: Option[Array[Byte]])
+case class NotificationPayload(text: Option[String], data: Option[Array[Byte]])

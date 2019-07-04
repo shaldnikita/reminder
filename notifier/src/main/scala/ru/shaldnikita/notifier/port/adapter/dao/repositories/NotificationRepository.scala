@@ -1,6 +1,6 @@
 package ru.shaldnikita.notifier.port.adapter.dao.repositories
 
-import ru.shaldnikita.notifier.domain.models.Notification
+import ru.shaldnikita.notifier.domain.models.notifications.Notification
 import ru.shaldnikita.notifier.port.adapter.dao.Tables.notifications
 import ru.shaldnikita.notifier.port.adapter.dao.tables.NotificationTable
 import slick.jdbc.H2Profile.api._
