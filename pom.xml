@@ -11,6 +11,9 @@
 
     <modules>
         <module>notifier</module>
+        <module>scheduler</module>
+        <module>users-service</module>
+        <module>notifications-service</module>
     </modules>
 
     <properties>
