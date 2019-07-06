@@ -1,5 +1,6 @@
 package port.adapter.dao.contact
 
+import domain.users.contacts.{Contact, ContactType}
 import slick.jdbc.H2Profile.api._
 import slick.lifted.Tag
 
@@ -29,4 +30,16 @@ class ContactsTable(tag: Tag) extends Table[ContactSchema](tag, "contacts") {
 case class ContactSchema(contactId: String,
                          `type`: String,
                          value: String,
-                         userId: String)
+                         userId: String) {
+  def toDomain = {
+    Contact(
+      //todo add UNDEFINED type and log error
+      ContactType.ofId(`type`).getOrElse(throw new Error(
+        s"Invalid contact type [$`type`] for record [$contactId] found in database."
+      )),
+      value,
+      userId,
+      Some(contactId)
+    )
+  }
+}

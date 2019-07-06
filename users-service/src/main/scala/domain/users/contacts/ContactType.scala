@@ -3,9 +3,11 @@ package domain.users.contacts
 import enumeratum._
 
 //enum
-sealed abstract class ContactType(id: String) extends EnumEntry
+sealed abstract class ContactType(val id: String) extends EnumEntry
 
 object ContactType extends Enum[ContactType] {
+
+  def ofId(id: String): Option[ContactType] = values.find(_.id == id)
 
   override def values = findValues
 

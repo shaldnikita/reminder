@@ -3,6 +3,7 @@ package port.adapter.dao.contact
 import cats.data.NonEmptyList
 import port.adapter.dao.Tables
 import port.adapter.dao.Tables.contacts
+import port.adapter.dao.contact.ContactDao._
 import slick.jdbc.H2Profile.api._
 
 /**
@@ -10,18 +11,54 @@ import slick.jdbc.H2Profile.api._
   *         on 04.07.2019
   */
 class ContactDao {
-  def insert(contacts: NonEmptyList[ContactSchema]) = Tables.contacts ++= contacts.toList
+  def create(contact: ContactSchema)(implicit db: Database) =
+    db.run(CreateContacts(NonEmptyList.one(contact)))
 
-  def update(contact: ContactSchema) = contacts.filter(_.contactId === contact.contactId)
-    .update(contact)
+  def create(contacts: NonEmptyList[ContactSchema])(implicit db: Database) =
+    db.run(CreateContacts(contacts))
 
-  def updateUserContacts(userId: String, contacts: NonEmptyList[ContactSchema]) = {
-    for {
-      _ <- Tables.contacts.filter(_.userId === userId).delete
-      _ <- Tables.contacts ++= contacts.toList
-    } yield ()
-  }
+  def update(contact: ContactSchema)(implicit db: Database) =
+    db.run(UpdateContact(contact))
 
-  def removeAllUserContacts(userId: String) = contacts.filter(_.userId === userId).delete
+  def delete(contactId: String)(implicit db: Database) =
+    db.run(DeleteContact(contactId))
+
+  def findUserContacts(userId: String)(implicit db: Database) =
+    db.run(FindUserContacts(userId))
+
+  def updateUserContacts(userId: String, contacts: NonEmptyList[ContactSchema])(
+      implicit db: Database) =
+    db.run(UpdateUserContacts(userId, contacts))
+
+  def removeAllUserContacts(userId: String)(implicit db: Database) =
+    db.run(RemoveAllUserContacts(userId))
+
+}
+
+object ContactDao {
+
+  val CreateContacts = (contacts: NonEmptyList[ContactSchema]) =>
+    Tables.contacts ++= contacts.toList
+
+  val UpdateContact = (contact: ContactSchema) =>
+    contacts
+      .filter(_.contactId === contact.contactId)
+      .update(contact)
+
+  val DeleteContact = (contactId: String) =>
+    contacts.filter(_.contactId === contactId).delete
+
+  val FindUserContacts = (userId: String) =>
+    contacts.filter(_.userId === userId).result
+
+  val RemoveAllUserContacts = (userId: String) =>
+    contacts.filter(_.userId === userId).delete
+
+  val UpdateUserContacts =
+    (userId: String, contacts: NonEmptyList[ContactSchema]) =>
+      DBIO.seq(
+        Tables.contacts.filter(_.userId === userId).delete,
+        Tables.contacts ++= contacts.toList
+    )
 
 }
