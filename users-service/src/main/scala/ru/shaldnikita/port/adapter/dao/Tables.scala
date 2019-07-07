@@ -2,6 +2,10 @@ package ru.shaldnikita.port.adapter.dao
 
 import ru.shaldnikita.port.adapter.dao.contact.ContactsTable
 import ru.shaldnikita.port.adapter.dao.user.UsersTable
+import slick.jdbc.PostgresProfile.api.{
+  schemaActionExtensionMethods,
+  tableQueryToTableQueryExtensionMethods
+}
 import slick.lifted.TableQuery
 
 /**
@@ -13,4 +17,6 @@ object Tables {
   val contacts = TableQuery[ContactsTable]
 
   def tables = Seq(users, contacts)
+
+  def setup = tables.map(_.schema).reduce((a, b) => a ++ b).create
 }

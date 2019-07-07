@@ -1,10 +1,12 @@
 package ru.shaldnikita.port.adapter.dao.contact
 
 import cats.data.NonEmptyList
-import ru.shaldnikita.port.adapter.dao.Tables.contacts
-import ContactDao._
 import ru.shaldnikita.port.adapter.dao.Tables
-import slick.jdbc.H2Profile.api._
+import ru.shaldnikita.port.adapter.dao.Tables.contacts
+import ru.shaldnikita.port.adapter.dao.contact.ContactDao._
+import slick.jdbc.PostgresProfile.api._
+
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
@@ -17,7 +19,7 @@ class ContactDao {
   def create(contacts: NonEmptyList[ContactSchema])(implicit db: Database) =
     db.run(CreateContacts(contacts))
 
-  def update(contact: ContactSchema)(implicit db: Database) =
+  def update(contact: ContactSchema)(implicit db: Database): Future[Int] =
     db.run(UpdateContact(contact))
 
   def delete(contactId: String)(implicit db: Database) =
@@ -26,9 +28,17 @@ class ContactDao {
   def findUserContacts(userId: String)(implicit db: Database) =
     db.run(FindUserContacts(userId))
 
-  def updateUserContacts(userId: String, contacts: NonEmptyList[ContactSchema])(
-      implicit db: Database) =
-    db.run(UpdateUserContacts(userId, contacts))
+  def updateAllUserContacts(userId: String,
+                            contacts: NonEmptyList[ContactSchema])(
+      implicit db: Database,
+      ec: ExecutionContext) = {
+    val actions =
+      for {
+        removed <- RemoveAllUserContacts(userId)
+        _       <- CreateContacts(contacts)
+      } yield removed
+    db.run(actions.transactionally)
+  }
 
   def removeAllUserContacts(userId: String)(implicit db: Database) =
     db.run(RemoveAllUserContacts(userId))

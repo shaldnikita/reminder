@@ -44,7 +44,11 @@ class UserService(userDao: UserDao, contactDao: ContactDao)(implicit ec: EC,
       .map(_ => user)
   }
 
-  //TODO replace unit with option
-  def deleteUser(userId: String): Future[Unit] =
-    userDao.deleteUserAndContacts(userId)
+  def deleteUser(userId: String): Future[Option[Unit]] =
+    userDao
+      .deleteUserAndContacts(userId)
+      .map {
+        case 0 => None
+        case 1 => Some(())
+      }
 }

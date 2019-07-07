@@ -1,7 +1,7 @@
 package ru.shaldnikita.port.adapter.dao.user
 
 import ru.shaldnikita.domain.users.User
-import slick.jdbc.H2Profile.api._
+import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
 
 /**

@@ -3,9 +3,9 @@ package ru.shaldnikita.port.adapter.dao.user
 import ru.shaldnikita.port.adapter.dao.Tables.users
 import ru.shaldnikita.port.adapter.dao.contact.ContactDao
 import ru.shaldnikita.port.adapter.dao.user.UserDao._
-import slick.jdbc.H2Profile.api._
+import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
@@ -27,14 +27,14 @@ class UserDao {
     db.run(UpdateUser(user))
 
   def deleteUserAndContacts(userId: String)(
-      implicit db: Database): Future[Unit] = db.run(
-    DBIO
-      .seq(
-        DeleteUser(userId),
-        ContactDao.RemoveAllUserContacts(userId)
-      )
-      .transactionally
-  )
+      implicit db: Database,
+      ec: ExecutionContext): Future[Int] = {
+    val actions = for {
+      deleted <- DeleteUser(userId)
+      _       <- ContactDao.RemoveAllUserContacts(userId)
+    } yield deleted
+    db.run(actions.transactionally)
+  }
 }
 
 object UserDao {
