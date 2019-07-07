@@ -1,4 +1,4 @@
-package ru.shaldnikita.port.adapter.web.handlers
+package ru.shaldnikita.port.adapter.web.handlers.users
 
 import java.util.UUID
 
@@ -6,9 +6,15 @@ import akka.Done
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Route
 import ru.shaldnikita.application.UserService
-import ru.shaldnikita.port.adapter.web.BaseHandler
-import ru.shaldnikita.port.adapter.web.WebUtils._
-import ru.shaldnikita.port.adapter.web.models.UserModel
+import ru.shaldnikita.port.adapter.web.handlers.BaseHandler
+import ru.shaldnikita.port.adapter.web.models.dto.users.{
+  CreateUserModel,
+  UserModel
+}
+import ru.shaldnikita.port.adapter.web.validation.{
+  CreateUserModelValidator,
+  UserModelValidator
+}
 
 import scala.concurrent.ExecutionContext
 
@@ -19,19 +25,17 @@ import scala.concurrent.ExecutionContext
 class UserHandler(userService: UserService)(implicit ec: ExecutionContext)
     extends BaseHandler {
 
-  val route: Route = pathPrefix("users") {
+  val routes: Route = pathPrefix("users") {
+
     pathEndOrSingleSlash {
       get {
         findAll
       } ~
-        entity(as[UserModel]) { user =>
-          post(
-            createUser(user)
-          ) ~
-            put(
-              updateUser(user)
-            )
-        }
+        (put & validatedEntity(as[UserModel], UserModelValidator.validate))(
+          user => updateUser(user)) ~ (post &
+        validatedEntity(as[CreateUserModel],
+                        CreateUserModelValidator.validate))(user =>
+        createUser(user))
     } ~
       path(JavaUUID) { userId =>
         get {
@@ -41,25 +45,23 @@ class UserHandler(userService: UserService)(implicit ec: ExecutionContext)
             deleteUser(userId)
           }
       }
-
   }
 
   def deleteUser(userId: UUID) = {
     complete(
       userService
         .deleteUser(userId.toString)
-        .map(_.map(_ => Done)
-          .toResponse(StatusCodes.OK)))
+        .map(_ => Done))
   }
 
   private def findAll = {
     complete(userService.findUsers().map(_.map(UserModel.toModel)))
   }
 
-  private def createUser(user: UserModel) = {
+  private def createUser(user: CreateUserModel) = {
     complete(
       userService
-        .createUser(UserModel.toDomain(user))
+        .createUser(CreateUserModel.toDomain(user))
         .map(user => StatusCodes.Created -> UserModel.toModel(user)))
   }
 
@@ -67,8 +69,7 @@ class UserHandler(userService: UserService)(implicit ec: ExecutionContext)
     complete(
       userService
         .updateUser(UserModel.toDomain(user))
-        .map(_.map(UserModel.toModel))
-        .map(_.toResponse(StatusCodes.OK))
+        .map(UserModel.toModel)
     )
   }
 
@@ -76,8 +77,7 @@ class UserHandler(userService: UserService)(implicit ec: ExecutionContext)
     complete(
       userService
         .findUser(userId.toString)
-        .map(_.map(UserModel.toModel))
-        .map(_.toResponse(StatusCodes.OK))
+        .map(UserModel.toModel)
     )
   }
 }

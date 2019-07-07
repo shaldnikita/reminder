@@ -1,6 +1,6 @@
-package ru.shaldnikita.domain.users
+package ru.shaldnikita.domain.models.users
 
-import ru.shaldnikita.domain.users.contacts.{Contact, ContactType}
+import ru.shaldnikita.domain.models.contacts.{Contact, ContactType}
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

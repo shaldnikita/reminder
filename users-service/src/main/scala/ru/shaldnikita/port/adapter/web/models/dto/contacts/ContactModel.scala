@@ -1,8 +1,9 @@
-package ru.shaldnikita.port.adapter.web.models
+package ru.shaldnikita.port.adapter.web.models.dto.contacts
 
 import cats.implicits._
-import ru.shaldnikita.domain.users.contacts.{Contact, ContactType}
-import ru.shaldnikita.port.adapter.web.exceptions.InvalidModelException
+import ru.shaldnikita.domain.exceptions.UsersServiceException
+import ru.shaldnikita.domain.models.contacts.{Contact, ContactType}
+import ru.shaldnikita.port.adapter.web.models.dto.DtoModel
 import spray.json.RootJsonFormat
 
 /**
@@ -14,7 +15,7 @@ case class ContactModel(contactId: Option[String],
                         value: String,
                         userId: String)
 
-object ContactModel extends WebModel[ContactModel, Contact] {
+object ContactModel extends DtoModel[ContactModel, Contact] {
   override def jsonFormat: RootJsonFormat[ContactModel] =
     jsonFormat4(ContactModel.apply)
 
@@ -23,7 +24,7 @@ object ContactModel extends WebModel[ContactModel, Contact] {
     val contactType = ContactType.ofId(`type`)
     contactType
       .map(Contact(_, value, userId, contactId))
-      .getOrElse(throw InvalidModelException(s"Unexpected type ${`type`}"))
+      .getOrElse(throw UsersServiceException(s"Unexpected type ${`type`}"))
   }
 
   override def toModel(domain: Contact) = {

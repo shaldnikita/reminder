@@ -1,4 +1,4 @@
-package ru.shaldnikita.domain.users.contacts
+package ru.shaldnikita.domain.models.contacts
 
 import enumeratum._
 

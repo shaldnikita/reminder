@@ -1,6 +1,4 @@
-package ru.shaldnikita.domain.users.contacts
-
-import java.util.UUID
+package ru.shaldnikita.domain.models.contacts
 
 sealed abstract case class Contact(contactId: String,
                                    `type`: ContactType,
@@ -9,16 +7,15 @@ sealed abstract case class Contact(contactId: String,
 
 object Contact {
 
-  def apply(`type`: ContactType,
+  def apply(contactId: String,
+            `type`: ContactType,
             value: String,
-            userId: String,
-            contactId: Option[String]): Contact = {
-    val id = contactId.getOrElse(UUID.randomUUID().toString)
+            userId: String): Contact = {
     `type` match {
-      case ContactType.Vk          => new VkPage(value, userId, id)
-      case ContactType.Telegram    => new Telegram(value, userId, id)
-      case ContactType.PhoneNumber => new PhoneNumber(value, userId, id)
-      case ContactType.Email       => new Email(value, userId, id)
+      case ContactType.Vk          => new VkPage(value, userId, contactId)
+      case ContactType.Telegram    => new Telegram(value, userId, contactId)
+      case ContactType.PhoneNumber => new PhoneNumber(value, userId, contactId)
+      case ContactType.Email       => new Email(value, userId, contactId)
     }
   }
   final class VkPage(login: String, userId: String, contactId: String)

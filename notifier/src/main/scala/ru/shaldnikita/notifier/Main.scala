@@ -17,16 +17,19 @@ object Main extends App {
 
   override def main(args: Array[String]): Unit = {
     Environment
-    val log =  Logging(system.eventStream, "reminder")
+    val log = Logging(system.eventStream, "reminder")
 
-    val bindingFuture = Http().bindAndHandle(Environment.endpoint.route, "localhost", 8080)
-    bindingFuture.map { serverBinding =>
-      log.info(s"Bound to ${serverBinding.localAddress} ")
-    }.onFailure {
-      case ex: Exception =>
-        log.error(ex, "Failed to bind to {}:{}!", "host", 8080)
-        system.terminate()
-    }
+    val bindingFuture =
+      Http().bindAndHandle(Environment.endpoint.route, "localhost", 8080)
+    bindingFuture
+      .map { serverBinding =>
+        log.info(s"Bound to ${serverBinding.localAddress} ")
+      }
+      .onFailure {
+        case ex: Exception =>
+          log.error(ex, "Failed to bind to {}:{}!", "host", 8080)
+          system.terminate()
+      }
     Environment.notifyKeeper ! Notification(
       text = "asd",
       notifyIn = FiniteDuration.apply(1, TimeUnit.SECONDS),

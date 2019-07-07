@@ -1,7 +1,7 @@
 package ru.shaldnikita.port.adapter.dao.contact
 
-import ru.shaldnikita.domain.users.contacts.{Contact, ContactType}
-import slick.jdbc.H2Profile.api._
+import ru.shaldnikita.domain.models.contacts.{Contact, ContactType}
+import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
 
 /**
