@@ -1,6 +1,6 @@
-package port.adapter.dao.contact
+package ru.shaldnikita.port.adapter.dao.contact
 
-import domain.users.contacts.{Contact, ContactType}
+import ru.shaldnikita.domain.users.contacts.{Contact, ContactType}
 import slick.jdbc.H2Profile.api._
 import slick.lifted.Tag
 
@@ -8,11 +8,11 @@ import slick.lifted.Tag
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 04.07.2019
   */
-
 class ContactsTable(tag: Tag) extends Table[ContactSchema](tag, "contacts") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-  override def * = (contactId, `type`, value, userId) <> (ContactSchema.tupled, ContactSchema.unapply)
+  override def * =
+    (contactId, `type`, value, userId) <> (ContactSchema.tupled, ContactSchema.unapply)
 
   def contactId = column[String]("contact_id", O.Unique)
 
@@ -34,9 +34,12 @@ case class ContactSchema(contactId: String,
   def toDomain = {
     Contact(
       //todo add UNDEFINED type and log error
-      ContactType.ofId(`type`).getOrElse(throw new Error(
-        s"Invalid contact type [$`type`] for record [$contactId] found in database."
-      )),
+      ContactType
+        .ofId(`type`)
+        .getOrElse(
+          throw new Error(
+            s"Invalid contact type [${`type`}] for record [$contactId] found in database."
+          )),
       value,
       userId,
       Some(contactId)

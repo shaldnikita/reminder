@@ -1,4 +1,4 @@
-package domain.users.contacts
+package ru.shaldnikita.domain.users.contacts
 
 import java.util.UUID
 

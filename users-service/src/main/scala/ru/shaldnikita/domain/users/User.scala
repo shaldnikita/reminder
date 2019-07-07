@@ -1,8 +1,6 @@
-package domain.users
+package ru.shaldnikita.domain.users
 
-import java.util.UUID
-
-import domain.users.contacts.{Contact, ContactType}
+import ru.shaldnikita.domain.users.contacts.{Contact, ContactType}
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
@@ -14,5 +12,3 @@ final case class User(userId: String,
                       contacts: List[Contact]) {
   def contactTypes: Set[ContactType] = contacts.map(_.`type`).toSet
 }
-
-

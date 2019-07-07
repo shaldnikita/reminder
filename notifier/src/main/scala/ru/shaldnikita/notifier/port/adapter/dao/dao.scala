@@ -2,13 +2,13 @@ package ru.shaldnikita.notifier
 
 /*
 import ru.shaldnikita.notifier.domain.models.User
-import ru.shaldnikita.notifier.port.adapter.dao.Tables
+import ru.shaldnikita.notifier.ru.shaldnikita.adapter.dao.Tables
 import slick.jdbc.H2Profile.api._
 
 /**
-  * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
-  *         on 04.04.2019
-  */
+ * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
+ *         on 04.04.2019
+ */
 package object dao {
   val inMemoryDatabase = Database.forConfig("h2mem1")
 
@@ -29,4 +29,4 @@ package object dao {
 
   sys.addShutdownHook(inMemoryDatabase.close())
 }
-*/
+ */

@@ -1,15 +1,15 @@
 package ru.shaldnikita.notifier.port.adapter.dao.tables
 
 /*import ru.shaldnikita.notifier.domain.models.notifications.Notification
-import ru.shaldnikita.notifier.port.adapter.dao.Tables
+import ru.shaldnikita.notifier.ru.shaldnikita.adapter.dao.Tables
 import slick.jdbc.H2Profile.api._
 
 import scala.concurrent.duration.FiniteDuration
 
 /**
-  * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
-  *         on 28.04.2019
-  */
+ * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
+ *         on 28.04.2019
+ */
 class NotificationTable(tag: Tag) extends Table[Notification](tag, "notifications") {
 
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)

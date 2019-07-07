@@ -1,6 +1,6 @@
-package port.adapter.dao.user
+package ru.shaldnikita.port.adapter.dao.user
 
-import domain.users.User
+import ru.shaldnikita.domain.users.User
 import slick.jdbc.H2Profile.api._
 import slick.lifted.Tag
 

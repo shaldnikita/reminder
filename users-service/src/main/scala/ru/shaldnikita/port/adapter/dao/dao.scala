@@ -1,6 +1,7 @@
-package port.adapter.dao
+package ru.shaldnikita.port.adapter.dao
 
 import slick.jdbc.H2Profile.api._
+
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>
   *         on 04.07.2019

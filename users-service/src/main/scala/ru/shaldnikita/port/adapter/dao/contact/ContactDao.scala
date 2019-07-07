@@ -1,9 +1,9 @@
-package port.adapter.dao.contact
+package ru.shaldnikita.port.adapter.dao.contact
 
 import cats.data.NonEmptyList
-import port.adapter.dao.Tables
-import port.adapter.dao.Tables.contacts
-import port.adapter.dao.contact.ContactDao._
+import ru.shaldnikita.port.adapter.dao.Tables.contacts
+import ContactDao._
+import ru.shaldnikita.port.adapter.dao.Tables
 import slick.jdbc.H2Profile.api._
 
 /**

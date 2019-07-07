@@ -82,7 +82,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ru.shaldnikita.notifier.Main</mainClass>
+                            <mainClass>ru.shaldnikita.notifier.ru.shaldnikita.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
