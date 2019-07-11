@@ -1,0 +1,2 @@
+# reminder
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/838f40e654634f7abe19056f94abd01b)](https://app.codacy.com/app/shaldnikita/reminder?utm_source=github.com&utm_medium=referral&utm_content=shaldnikita/reminder&utm_campaign=Badge_Grade_Settings)
