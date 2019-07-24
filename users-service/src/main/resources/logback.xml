@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="stash" class="net.logstash.logback.appender.LogstashUdpSocketAppender">
+        <destination>127.0.0.1:5000</destination>
+
+        <!-- encoder is required -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <layout class="net.logstash.logback.layout.LogstashLayout">
+            <customFields>{"appname":"users-service"}</customFields>
+        </layout>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="stash" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
