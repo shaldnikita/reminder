@@ -24,8 +24,8 @@ object Dependencies {
   ) ++ commonTesting
 
   private lazy val commonTesting = Seq(
-    "org.scalamock" %% "scalamock" % "4.3.0" % "it" withSources () withJavadoc (),
-    "org.scalatest" %% "scalatest" % "3.0.8" % "it" withSources () withJavadoc ()
+    "org.scalamock" %% "scalamock" % "4.3.0" % "it, test" withSources () withJavadoc (),
+    "org.scalatest" %% "scalatest" % "3.0.8" % "it, test" withSources () withJavadoc ()
   )
 
   lazy val web = Seq(
