@@ -9,7 +9,7 @@ lazy val usersService = (project in file("users-service"))
   .configs(IntegrationTest)
   .settings(name := "users-service",
             Defaults.itSettings,
-            libraryDependencies ++= (core ++ web ++ database))
+            libraryDependencies ++= (core ++ web ++ database ++ monitoring))
 
 lazy val reminderWebCore = (project in file("reminder-web-core"))
   .dependsOn(reminderCore)
