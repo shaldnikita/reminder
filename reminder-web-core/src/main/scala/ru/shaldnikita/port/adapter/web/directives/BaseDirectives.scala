@@ -1,4 +1,4 @@
-package ru.shaldnikita.port.adapter.web.directives
+package ru.shaldnikita.users.port.adapter.web.directives
 
 import akka.http.scaladsl.server.Directives
 

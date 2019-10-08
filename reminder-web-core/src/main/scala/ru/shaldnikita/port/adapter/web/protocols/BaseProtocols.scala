@@ -1,4 +1,4 @@
-package ru.shaldnikita.port.adapter.web.protocols
+package ru.shaldnikita.users.port.adapter.web.protocols
 
 import akka.http.scaladsl.marshalling.PredefinedToResponseMarshallers._
 import akka.http.scaladsl.marshalling.{

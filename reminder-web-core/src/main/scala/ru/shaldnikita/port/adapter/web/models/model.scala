@@ -1,7 +1,7 @@
-package ru.shaldnikita.port.adapter.web
+package ru.shaldnikita.users.port.adapter.web
 
-import ru.shaldnikita.domain.validation.Validator.ValidationResult
-import ru.shaldnikita.port.adapter.web.models.ValidatedModel
+import ru.shaldnikita.users.domain.validation.Validator.ValidationResult
+import ru.shaldnikita.users.port.adapter.web.models.ValidatedModel
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

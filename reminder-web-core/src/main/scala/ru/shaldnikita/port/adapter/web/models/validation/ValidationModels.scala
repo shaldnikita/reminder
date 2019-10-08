@@ -1,6 +1,6 @@
-package ru.shaldnikita.port.adapter.web.models.validation
+package ru.shaldnikita.users.port.adapter.web.models.validation
 
-import ru.shaldnikita.domain.validation.Validator.ValidationErrors
+import ru.shaldnikita.users.domain.validation.Validator.ValidationErrors
 import spray.json.DefaultJsonProtocol._
 import spray.json.{JsValue, _}
 

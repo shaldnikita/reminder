@@ -1,6 +1,6 @@
-package ru.shaldnikita.domain.validation
+package ru.shaldnikita.users.domain.validation
 
-import ru.shaldnikita.domain.validation.Validator.ValidationResult
+import ru.shaldnikita.users.domain.validation.Validator.ValidationResult
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

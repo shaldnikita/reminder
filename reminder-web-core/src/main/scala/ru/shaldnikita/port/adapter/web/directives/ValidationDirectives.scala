@@ -1,13 +1,13 @@
-package ru.shaldnikita.port.adapter.web.directives
+package ru.shaldnikita.users.port.adapter.web.directives
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{Directive1, Rejection, RejectionHandler}
 import akka.http.scaladsl.unmarshalling.FromRequestUnmarshaller
 import cats.data.Validated.{Invalid, Valid}
-import ru.shaldnikita.domain.validation.Validator._
-import ru.shaldnikita.port.adapter.web.directives.ValidationDirectives.ValidationRejection
-import ru.shaldnikita.port.adapter.web.models.validation.ValidationModels
+import ru.shaldnikita.users.domain.validation.Validator._
+import ru.shaldnikita.users.port.adapter.web.directives.ValidationDirectives.ValidationRejection
+import ru.shaldnikita.users.port.adapter.web.models.validation.ValidationModels
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

@@ -1,6 +1,6 @@
-package ru.shaldnikita.port.adapter.web.models
+package ru.shaldnikita.users.port.adapter.web.models
 
-import ru.shaldnikita.domain.validation.Validator
+import ru.shaldnikita.users.domain.validation.Validator
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

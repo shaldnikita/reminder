@@ -1,4 +1,4 @@
-package ru.shaldnikita.port.adapter.web.models
+package ru.shaldnikita.users.port.adapter.web.models
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import spray.json.{DefaultJsonProtocol, RootJsonFormat}

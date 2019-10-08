@@ -1,11 +1,11 @@
-package ru.shaldnikita.port.adapter.web.directives
+package ru.shaldnikita.users.port.adapter.web.directives
 
 import akka.http.scaladsl.server.Directive1
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.FromRequestUnmarshaller
-import ru.shaldnikita.domain.validation.Validator
-import ru.shaldnikita.domain.validation.Validator.ValidationResult
-import ru.shaldnikita.port.adapter.web.directives.ValidationDirectives._
+import ru.shaldnikita.users.domain.validation.Validator
+import ru.shaldnikita.users.domain.validation.Validator.ValidationResult
+import ru.shaldnikita.users.port.adapter.web.directives.ValidationDirectives._
 
 /**
   * @author Nikita Shaldenkov <shaldnikita2@yandex.ru>

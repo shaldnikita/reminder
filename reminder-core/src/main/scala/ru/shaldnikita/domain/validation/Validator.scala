@@ -1,10 +1,10 @@
-package ru.shaldnikita.domain.validation
+package ru.shaldnikita.users.domain.validation
 
 import java.util.UUID
 
 import cats.data.{NonEmptyList, ValidatedNel}
 import cats.syntax.{ApplySyntax, ValidatedSyntax}
-import ru.shaldnikita.domain.validation.Validator._
+import ru.shaldnikita.users.domain.validation.Validator._
 
 import scala.util.Try
 
