@@ -1,4 +1,4 @@
-name := "users-service"
+name := "users"
 
 libraryDependencies ++= Seq(
   "org.scalamock" %% "scalamock" % "4.3.0" % "it" withSources () withJavadoc (),
