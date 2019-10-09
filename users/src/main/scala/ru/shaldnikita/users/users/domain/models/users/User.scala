@@ -1,5 +1,7 @@
 package ru.shaldnikita.users.users.domain.models.users
 
+import java.util.UUID
+
 import ru.shaldnikita.users.users.domain.models.contacts.{Contact, ContactType}
 import ru.shaldnikita.users.users.domain.models.users.User.UserId
 
@@ -16,4 +18,11 @@ final case class User(userId: UserId,
 
 object User {
   case class UserId(id: String) extends AnyVal
+
+  object UserId {
+    def apply(): UserId = new UserId(UUID.randomUUID().toString)
+
+    def apply(id: String): UserId = new UserId(id)
+  }
+
 }

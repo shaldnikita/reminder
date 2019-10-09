@@ -1,17 +1,5 @@
 package ru.shaldnikita.users.users
 
-import ru.shaldnikita.users.domain.models.contacts.Contact
-import ru.shaldnikita.users.domain.models.users.User
-import ru.shaldnikita.users.port.adapter.dao.user.UserSchema
-import ru.shaldnikita.users.port.adapter.dao.user.UserSchema
-import ru.shaldnikita.users.domain.models.contacts.Contact
-import ru.shaldnikita.users.domain.models.users.User
-import ru.shaldnikita.users.port.adapter.dao.contact.ContactSchema
-import ru.shaldnikita.users.port.adapter.dao.user.UserSchema
-import ru.shaldnikita.users.port.adapter.dao.contact.ContactSchema
-import ru.shaldnikita.users.port.adapter.dao.user.UserSchema
-import ru.shaldnikita.users.domain.models.contacts.Contact
-import ru.shaldnikita.users.domain.models.users.User
 import ru.shaldnikita.users.users.domain.models.contacts.Contact
 import ru.shaldnikita.users.users.domain.models.users.User
 import ru.shaldnikita.users.users.port.adapter.dao.contact.ContactSchema
@@ -25,13 +13,13 @@ package object application {
 
   implicit class RichUser(val user: User) extends AnyVal {
     def toSchema: UserSchema =
-      UserSchema(user.userId, user.firstName, user.secondName)
+      UserSchema(user.userId.id, user.firstName, user.secondName)
   }
 
   implicit class RichContact(val contact: Contact) extends AnyVal {
     def toSchema: ContactSchema =
       ContactSchema(
-        contact.contactId,
+        contact.contactId.id,
         contact.`type`.id,
         contact.value,
         contact.userId

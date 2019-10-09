@@ -10,7 +10,7 @@ import ru.shaldnikita.users.port.adapter.web.directives.{BaseDirectives, Validat
 import ru.shaldnikita.users.port.adapter.web.marshallers.ZIOMarshallers
 import ru.shaldnikita.users.port.adapter.web.protocols.BaseProtocols
 import ru.shaldnikita.users.users.application.exceptions.{ContactNotFoundException, UserNotFoundException}
-import ru.shaldnikita.users.users.domain.exceptions.UsersServiceException
+import ru.shaldnikita.users.users.domain.exceptions.UsersException
 import ru.shaldnikita.users.users.port.adapter.web.marshallers.ZIOMarshallers
 
 /**
@@ -30,7 +30,7 @@ trait BaseHandler
         complete(StatusCodes.NotFound -> e.getMessage)
       case e: ContactNotFoundException =>
         complete(StatusCodes.NotFound -> e.getMessage)
-      case e: UsersServiceException =>
+      case e: UsersException =>
         complete(StatusCodes.InternalServerError -> e.getMessage)
     })
 
