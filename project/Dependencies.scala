@@ -16,6 +16,8 @@ object Dependencies {
     "org.typelevel" %% "cats-core"  % "2.0.0-M4" withSources () withJavadoc (),
     "com.beachape"  %% "enumeratum" % "1.5.13" withSources () withJavadoc (),
     "dev.zio" %% "zio" % "1.0.0-RC14" withSources () withJavadoc (),
+    "dev.zio" %% "zio-streams" % "1.0.0-RC14" withSources () withJavadoc (),
+    "dev.zio" %% "zio-interop-reactivestreams" % "1.0.0-RC14" withSources () withJavadoc (),
     //LOGGING
     "net.logstash.logback" % "logstash-logback-encoder" % "6.1" withSources () withJavadoc (),
     "ch.qos.logback"       % "logback-core"             % logbackVersion withSources () withJavadoc (),
